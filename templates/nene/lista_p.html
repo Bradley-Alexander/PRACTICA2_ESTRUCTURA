@@ -1,0 +1,139 @@
+{% extends "template.html" %}
+
+{% block content %}
+
+
+                                
+
+                                <div class="booking-form-body">
+                                    
+                                    <div class="text-center mb-4 pb-lg-2">
+                                        <em class="text-white">Universidad Nacional de Loja</em>
+                                        <h2 class="text-white">Lista de Atenciones</h2>
+                                        <a href="http://127.0.0.1:5000/atenciones/formulario" class="btn custom-btn custom-border-btn">Agregar Atención</a>
+                                    </div>
+
+
+                                    <div class="row">
+
+                                        <h5 class="text-white">Tipo de ordenacion:</h5> 
+
+                                        <select id="tipo" onchange="cambiarLink()">
+                                            <option value="ascendente">Ascendente</option>
+                                            <option value="descendente">Descendente</option> 
+                                        </select>
+                                        
+                                        <h5 class="text-white">Atributo a ordenar:</h5> 
+
+                                        <select name="sort-by" id="sort-by" onchange="cambiarLink()">
+                                            <option value="nombre">Nombre</option>
+                                            <option value="tiempoDeAtencion">Tiempo de atención</option>
+                                            <option value="calificacion">Calificación</option>
+                                        </select>
+
+                                        <h5 class="text-white">Método de ordenación:</h5> 
+
+                                        <select id="sort-method" onchange="cambiarLink()">
+                                            <option value="Quick">Método Quick</option>
+                                            <option value="Merge">Método Merge Sort</option>
+                                            <option value="Shell">Método Shell Sort</option>
+                                        </select>
+
+                                        <a href="/atenciones/1/_nombre/Quick" id="link" class="btn btn-primary">Ordenar</a>
+                                                                    
+                                    </div>
+
+                                        <!-- Sección de búsqueda -->
+                                    <div class="row">
+                                        <h5 class="text-white">Buscar:</h5>
+                                        <select id="tipoBusqueda" onchange="cambiarLinkBuscar()">
+                                            <option value="1">Binaria</option>
+                                            <option value="2">Binaria Secuencial</option>
+                                        </select>
+
+                                        <h5 class="text-white">¿Qué desea buscar?:</h5>
+                                        <select id="criterioBusqueda" onchange="cambiarLinkBuscar()">
+                                            <option value="nombre">Nombres</option>
+                                            <option value="tiempoDeAtencion">Tiempo de atención</option>
+                                            <option value="calificacion">Calificación</option>
+                                        </select>
+
+                                        <!-- Campo de entrada para el valor a buscar -->
+                                        <h5 class="text-white">Ingrese el valor a buscar:</h5>
+                                        <input type="text" id="valorBuscar" oninput="cambiarLinkBuscar()">
+
+                                        <a href="http://127.0.0.1:5000/atencionesBuscar/Bradley/_nombre/2" id="linkBuscar" class="btn btn-primary">Buscar</a>
+                                    </div>
+
+                                    <table class="table  table-bordered text-white" id="tabla">
+                                        <thead>
+                                            <tr>
+                                                <th>id</th>
+                                                <th>Nombre</th>
+                                                <th>Tiempo de atencion</th>
+                                                <th>Calificación</th>
+                                                <th colspan="2">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in lista %}
+                                            <tr>
+                                                <td>{{ item.id }}</td>
+                                                <td>{{ item.nombre }}</td>
+                                                <td>{{ item.tiempoDeAtencion }} minutos</td>
+                                                <td>{{ item.calificacion }}</td>
+                                                <td><form action="/atenciones/eliminar" method="post">
+                                                    <input type="hidden" name="id" value="{{item.id}}">
+                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                </form>
+                                                </td>
+
+                                                    <td><a href="/atenciones/editar/{{item.id}}" class="btn btn-info">Modificar</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <script>
+                                    function cambiarLink() {
+                                        // Obtener los elementos select y el enlace a modificar
+                                        var tipoSelect = document.getElementById("tipo");
+                                        var sortBySelect = document.getElementById("sort-by");
+                                        var sortMethodSelect = document.getElementById("sort-method");
+                                        var link = document.getElementById("link");
+                                        
+                                        // Obtener los valores seleccionados
+                                        var tipoValor = tipoSelect.value;
+                                        var sortByValor = sortBySelect.value;
+                                        var sortMethodValor = sortMethodSelect.value;
+                                
+                                        // Determinar el número para el tipo de ordenación
+                                        var tipoNumero = tipoValor === "ascendente" ? 1 : 2;
+                                
+                                        // Actualizar el enlace del botón "Ordenar"
+                                        link.href = "/atenciones/" + tipoNumero + "/_" + sortByValor + "/" + sortMethodValor;
+                                    }
+
+                                    function cambiarLinkBuscar() {
+                                        // Obtener los elementos select, el campo de entrada y el enlace a modificar
+                                        var tipoBusqueda = document.getElementById("tipoBusqueda");
+                                        var criterioBusqueda = document.getElementById("criterioBusqueda");
+                                        var valorBuscar = document.getElementById("valorBuscar").value;
+                                        var link = document.getElementById("linkBuscar");
+
+                                        // Obtener los valores seleccionados
+                                        var tipoBusquedaValor = tipoBusqueda.value;
+                                        var criterioBusquedaValor = criterioBusqueda.value;
+
+                                        // Actualizar el enlace del botón "Buscar"
+                                        link.href = "http://127.0.0.1:5000/atencionesBuscar/" + valorBuscar + "/_" + criterioBusquedaValor + "/" + tipoBusquedaValor;
+                                    }
+    </script>
+                                </script>
+                                <script>
+                                    document.getElementById('link').addEventListener('click', function() {
+                                        // Aquí puedes redirigir a la URL deseada
+                                        window.location.href = "http://127.0.0.1:5000/atenciones/formulario";
+                                    });
+                                </script>
+{% endblock %}
