@@ -1,13 +1,13 @@
 class MergeSort:
     
-    def sort_merge_number_ascendent(self, array):
+    def sort_primitive_ascendent(self, array):
         if len(array) > 1:
             mid = len(array) // 2
             left = array[:mid]
             right = array[mid:]
             
-            self.sort_merge_number_ascendent(left)
-            self.sort_merge_number_ascendent(right)
+            self.sort_primitive_ascendent(left)
+            self.sort_primitive_ascendent(right)
             
             i = j = k = 0
             
@@ -31,14 +31,14 @@ class MergeSort:
                 k += 1
         return array
     
-    def sort_merge_number_descendent(self, array):
+    def sort_primitive_descendent(self, array):
         if len(array) > 1:
             mid = len(array) // 2
             left = array[:mid]
             right = array[mid:]
             
-            self.sort_merge_number_descendent(left)
-            self.sort_merge_number_descendent(right)
+            self.sort_primitive_descendent(left)
+            self.sort_primitive_descendent(right)
             
             i = j = k = 0
             

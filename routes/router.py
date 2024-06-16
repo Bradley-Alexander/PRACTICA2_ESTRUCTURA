@@ -24,14 +24,10 @@ def ver_atenciones_ordenar(tipo, attr, metodo):
     at = AtencionDaoControl()
     list = at._list()
     list.sort_models(attr, int(tipo), str(metodo))
-    print(metodo)
     return render_template('nene/lista_p.html', lista=at.to_dict_lista(list))
 
 @router.route('/atencionesBuscar/<data>/<attr>/<metodo>')
 def ver_atenciones_buscar(data, attr, metodo):
-    print(data)
-    print(attr)
-    print(metodo)
     at = AtencionDaoControl()
     list = at._list()
     list.sort_models(attr, 1, "Quick")
@@ -53,6 +49,7 @@ def guardar_atencion():
     at._atencion._nombre = data['nombre']
     at._atencion._tiempoDeAtencion = data['tiempoDeAtencion']
     at._atencion._calificacion = data['calificacion']
+    at._atencion._fechaDeAtencion = data['fechaDeAtencion']
     at.save
     return redirect('/atenciones', code=302)
 
@@ -81,22 +78,10 @@ def modificar_atencion():
     at._atencion._nombre = data['nombre']
     at._atencion._tiempoDeAtencion = data['tiempoDeAtencion']
     at._atencion._calificacion = data['calificacion']
+    at._atencion._fechaDeAtencion = data['fechaDeAtencion']
     at.merge(pos)
     return redirect('/atenciones', code=302)
 
-@router.route('/atenciones_noEncontradas', methods=['POST'])
-def no_encontrado():
-    at = AtencionDaoControl()
-    data = request.form
-    pos = int(data['id'])-1
-    nene = at._list().get(pos)
-    
-    at._atencion = nene
-    at._atencion._nombre = data['nombre']
-    at._atencion._tiempoDeAtencion = data['tiempoDeAtencion']
-    at._atencion._calificacion = data['calificacion']
-    at.merge(pos)
-    return redirect('/atenciones', code=302)
 
 
 

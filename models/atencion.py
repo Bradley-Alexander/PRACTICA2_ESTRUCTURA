@@ -1,11 +1,10 @@
-from models.categoriaCalificacion import CategoriaCalificacion
-
 class Atencion:
     def _init_(self):
         self.__id = 0
         self.__nombre = ''
         self.__tiempoDeAtencion = ''
         self.__calificacion = ''
+        self.__fechaDeAtencion = ''
 
     @property
     def _id(self):
@@ -39,7 +38,13 @@ class Atencion:
     def _calificacion(self, value):
         self.__calificacion = value
 
+    @property
+    def _fechaDeAtencion(self):
+        return self.__fechaDeAtencion
 
+    @_fechaDeAtencion.setter
+    def _fechaDeAtencion(self, value):
+        self.__fechaDeAtencion = value
     
 
     @property
@@ -49,7 +54,7 @@ class Atencion:
             'nombre': self._nombre,
             'tiempoDeAtencion': self._tiempoDeAtencion,
             'calificacion': self._calificacion,
-             
+            'fechaDeAtencion': self._fechaDeAtencion
 
         }
     
@@ -59,6 +64,7 @@ class Atencion:
         atencion.__nombre = data['nombre']
         atencion.__tiempoDeAtencion = data['tiempoDeAtencion']
         atencion.__calificacion = data['calificacion']
+        atencion.__fechaDeAtencion = data['fechaDeAtencion']
 
         return atencion
 

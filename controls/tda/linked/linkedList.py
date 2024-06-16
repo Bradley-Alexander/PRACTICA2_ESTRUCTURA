@@ -2,10 +2,6 @@ from controls.tda.linked.node import Node
 from controls.exception.linkedEmpty import LinkedEmpty
 from controls.exception.arrayPositionException import ArrayPositionException
 from numbers import Number
-
-from controls.tda.linked.ordenacion.burbuja import Burbuja
-from controls.tda.linked.ordenacion.insercion import Insercion
-from controls.tda.linked.ordenacion.seleccion import Seleccion
 from controls.tda.linked.ordenacion.quickSort import QuickSort
 from controls.tda.linked.ordenacion.mergeSort import MergeSort
 from controls.tda.linked.ordenacion.shellSort import ShellSort
@@ -215,42 +211,15 @@ class Linked_List(object):
             self.__addLast__(array[i])
 
 
-    def sort(self, type):
+    #PARA ORDENAR VALORES NUMÉRICOS O CADENAS
+    def sort(self, type, metodo):
         if self.isEmpty:
             raise LinkedEmpty("List empty")
         else:
             array = self.toArray
             if isinstance(array[0], Number) or isinstance(array[0], str):
-                order = Burbuja()
-                order= Insercion()
-                order= Seleccion()
-                order= QuickSort()
-                if type == 1:
-                    array = order.sort_burbuja_number_ascendent(array)
-                    #array = orderInsercion.sort_primitive_ascendent(array)
-                    #array = orderSeleccion.sort_primitive_ascendent(array)
-                    #array = orderQuickSort.sort_primitive_ascendent(array)
-                else:
-                    array = order.sort_burbuja_number_descendent(array)
-                    #array = orderInsercion.sort_primitive_descendent(array)
-                    #array = orderSeleccion.sort_primitive_descendent(array)
-                    #array = orderQuickSort.sort_primitive_descendent(array)
-            
-            self.toList(array)
-
-    def sort_models(self, attribute, type, metodo = "Quick"):
-        if self.isEmpty:
-            raise LinkedEmpty("List empty")
-        else:
-            array = self.toArray
-            if isinstance(array[0], object):
-                if metodo == "Burbuja":
-                    order = Burbuja()
-                elif metodo == "Insercion":
-                    order = Insercion()
-                elif metodo == "Seleccion":
-                    order = Seleccion()
-                elif metodo == "Quick":
+                                
+                if metodo == "Quick":
                     order = QuickSort()
                 elif metodo == "Merge":
                     order = MergeSort()
@@ -258,47 +227,37 @@ class Linked_List(object):
                     order = ShellSort()
 
                 if type == 1:
-                    #array = order.sort_burbuja_attribute_ascendent(array, attribute)
-                    #array = orderInsercion.sort_models_ascendent(array, attribute)
-                    #array = orderSeleccion.sort_models_ascendent(array, attribute)
+                    array = order.sort_primitive_ascendent(array)
+                else:
+                    array = order.sort_primitive_descendent(array)
+            
+            self.toList(array)
+
+    #PARA ORDENAR MODELOS PARA LA PRÁCTICA
+    def sort_models(self, attribute, type, metodo):
+        if self.isEmpty:
+            raise LinkedEmpty("List empty")
+        else:
+            array = self.toArray
+            if isinstance(array[0], object):
+
+                if metodo == "Quick":
+                    order = QuickSort()
+                elif metodo == "Merge":
+                    order = MergeSort()
+                elif metodo == "Shell":
+                    order = ShellSort()
+
+                if type == 1:
                     array = order.sort_models_ascendent(array, attribute)
                 else:
-                    #array = order.sort_burbuja_attribute_descendent(array, attribute)
-                    #array = orderInsercion.sort_models_descendent(array, attribute)
-                    #array = orderSeleccion.sort_models_descendent(array, attribute)
                     array = order.sort_models_descendent(array, attribute)
             self.toList(array)
         return self
     
 
-###############################################
-    def search_number_equals(self, data):
-        list = Linked_List()
-        if self.isEmpty:
-            raise LinkedEmpty("List empty")
-        else:
-            array = self.toArray
-            for i in range(0, len(array) -1):
-                #if array[i] == data:
-                if (array[i].lower().startswith(data.lower())):
-                    list.add(array[i], list._length)    
-        return list
-    
-    def search_number_equals_models(self, data, attribute):
-        list = Linked_List()
-        if self.isEmpty:
-            raise LinkedEmpty("List empty")
-        else:
-            array = self.toArray
-            for i in range(0, len(array)):
-                if array[i].__getattribute__(attribute) == data:
-                    list.add(array[i], list._length)
-            print("Los modelos con el atributo", attribute, "igual a: ", data, "son: ")
-            print(list)    
-        return list
 
-
-
+    #BUSQUEDA BINARIA PARA VALORES NUMÉRICOS
     def busqueda_binaria(self, data):
         list = Linked_List()
         if self.isEmpty:
@@ -316,8 +275,9 @@ class Linked_List(object):
                     max = mid - 1
                 else:
                     min = mid + 1
+            return "No se encontro el dato"
 
-
+    #BUSQUEDA BINARIA PARA MODELOS PARA LA PRÁCTICA
     def busqueda_binaria_models(self, data, attribute):
         list = Linked_List()
         if self.isEmpty:
@@ -335,7 +295,9 @@ class Linked_List(object):
                     max = mid - 1
                 else:
                     min = mid + 1
+            return None
 
+    #BUSQUEDA SECUENCIAL BINARIA PARA VALORES NUMÉRICOS
     def busqueda_binaria_secuencial(self, data):
         list = Linked_List()
         if self.isEmpty:
@@ -349,22 +311,24 @@ class Linked_List(object):
                 mid = int((min + max) // 2)
                 if array[mid] == data:                    
                     encontrado = 1
-                    print("qq")
                     break
                 elif array[mid] > data:
                     max = mid - 1
                 else:
                     min = mid + 1
-            print("ñññ")
+
             if encontrado == 1:
                 for i in range(0, len(array)):
                     if array[i] == data:
                     #if array[i].lower().startswith(data.lower()):
                         list.add(array[i], list._length)
                 return list
-            else:   
-                return None
+            else:  
+                return "No se encontro el dato"
 
+
+
+    #BUSQUEDA SECUENCIAL BINARIA PARA MODELOS PARA LA PRÁCTICA
     def busqueda_binaria_secuencial_models(self, data, attribute):
         list = Linked_List()
         if self.isEmpty:
@@ -391,7 +355,9 @@ class Linked_List(object):
                 return list
             else:   
                 return None
-            
+
+
+    #FUNCION USADA EN EL ROUTER PARA ELEGIR ENTRE BUSQUEDA BINARIA O SECUENCIAL BINARIA    
     def busqueda_binaria_o_secuencial_binaria_models(self, data, attribute, metodo):
         if metodo == "1":
             return self.busqueda_binaria_models(data, attribute)

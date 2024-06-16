@@ -1,5 +1,5 @@
 class ShellSort:
-    def sort_shell_number_ascendent(self, array):
+    def sort_primitive_ascendent(self, array):
         gap = len(array) // 2
         while gap > 0:
             for i in range(gap, len(array)):
@@ -12,7 +12,7 @@ class ShellSort:
             gap //= 2
         return array
     
-    def sort_shell_number_descendent(self, array):
+    def sort_primitive_descendent(self, array):
         gap = len(array) // 2
         while gap > 0:
             for i in range(gap, len(array)):
