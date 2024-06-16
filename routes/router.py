@@ -81,12 +81,3 @@ def modificar_atencion():
     at._atencion._fechaDeAtencion = data['fechaDeAtencion']
     at.merge(pos)
     return redirect('/atenciones', code=302)
-
-
-
-
-
-
-
-
-
